@@ -4,15 +4,39 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	Rigidbody rgb;
 	public int speed;
-	public float rotationSpeed;
+//	public float rotationSpeed;
 	Vector3 movement;
-	Plane playerPlane;
 
+//	Plane playerPlane;
+
+//	private Vector3 worldpos;
+//	private float mouseX;
+//	private float mouseY;
+//	private float cameraDif;
+	float camRayLength = 200f;
+
+//	public GameObject fpc;
+
+	int floorMask;
+
+	void Awake(){
+		// Create a layer mask for the floor layer.
+		floorMask = LayerMask.GetMask ("Floor");
+		rgb = GetComponent<Rigidbody> ();
+
+	}
 
 	// Use this for initialization
-	void Start () {
-		rgb = GetComponent<Rigidbody> ();
-	}
+//	void Start () {
+//		cameraDif = GetComponent<Camera>().transform.position.y - fpc.transform.position.y;
+
+
+
+
+	
+//	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 		float v = Input.GetAxisRaw("Vertical");
 
 		move (h, v);
-		Turn ();
+		Turning ();
 	}
 
 	void move(float h, float v) {
@@ -47,21 +71,66 @@ public class PlayerController : MonoBehaviour {
 
 		rgb.MovePosition(transform.position + movement);
 	}
-		
-	void Turn() {
-		playerPlane = new Plane (Vector3.up, transform.position);
 
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+	void Turning ()
+	{
+		// Create a ray from the mouse cursor on screen in the direction of the camera.
+		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
-		float hitdist = 0f;
+		// Create a RaycastHit variable to store information about what was hit by the ray.
+		RaycastHit floorHit;
 
-		if (playerPlane.Raycast(ray,out hitdist)) {
-			Vector3 targetPoint = ray.GetPoint(hitdist);
+		// Perform the raycast and if it hits something on the floor layer...
+		if(Physics.Raycast (camRay, out floorHit, camRayLength, floorMask))
+		{
+			// Create a vector from the player to the point on the floor the raycast from the mouse hit.
+			Vector3 playerToMouse = floorHit.point - transform.position;
 
-			Quaternion targetRotation = Quaternion.LookRotation(targetPoint-transform.position);
+			Debug.Log (floorHit.point);
 
+			// Ensure the vector is entirely along the floor plane.
+			playerToMouse.y = 0f;
 
+			// Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
+			Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
+
+			// Set the player's rotation to this new rotation.
+			rgb.MoveRotation (newRotation);
 		}
 	}
 
+
+//	void Turn() {
+//		playerPlane = new Plane (Vector3.up, transform.position);
+//
+//		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//
+//		float hitdist = 0f;
+//
+//		if (playerPlane.Raycast(ray,out hitdist)) {
+//			Vector3 targetPoint = ray.GetPoint(hitdist);
+//
+//			Quaternion targetRotation = Quaternion.LookRotation(targetPoint-transform.position);
+//
+//
+//		}
+//	}
+//
+
+
+
+//	void LookAtMouse()
+//	{
+//		mouseX = Input.mousePosition.x;
+//
+//		mouseY = Input.mousePosition.y;
+//
+//		worldpos = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(mouseX, mouseY, cameraDif));
+//
+//		Vector3 turretLookDirection = new Vector3 (worldpos.x,fpc.transform.position.y, worldpos.z);
+//
+//		fpc.transform.LookAt(turretLookDirection);
+//	}
+
+		
 }
