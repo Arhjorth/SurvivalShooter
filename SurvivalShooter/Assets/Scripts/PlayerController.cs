@@ -4,11 +4,14 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	Rigidbody rgb;
 	public int speed;
+	public float rotationSpeed;
 	Vector3 movement;
+	Plane playerPlane;
+
+
 	// Use this for initialization
 	void Start () {
 		rgb = GetComponent<Rigidbody> ();
-	
 	}
 	
 	// Update is called once per frame
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour {
 		float v = Input.GetAxisRaw("Vertical");
 
 		move (h, v);
+		Turn ();
 	}
 
 	void move(float h, float v) {
@@ -44,4 +48,20 @@ public class PlayerController : MonoBehaviour {
 		rgb.MovePosition(transform.position + movement);
 	}
 		
+	void Turn() {
+		playerPlane = new Plane (Vector3.up, transform.position);
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+		float hitdist = 0f;
+
+		if (playerPlane.Raycast(ray,out hitdist)) {
+			Vector3 targetPoint = ray.GetPoint(hitdist);
+
+			Quaternion targetRotation = Quaternion.LookRotation(targetPoint-transform.position);
+
+
+		}
+	}
+
 }
