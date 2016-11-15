@@ -17,6 +17,11 @@ public class EnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+
+		if (enemies.Length < 5) {
+			Instantiate (Enemy, this.transform.position+offset, Quaternion.identity);
+		}
 	}
 }

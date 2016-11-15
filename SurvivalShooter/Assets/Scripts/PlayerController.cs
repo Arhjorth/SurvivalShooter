@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	public int speed;
 //	public float rotationSpeed;
 	Vector3 movement;
+	bool sprint = false;
 
 //	Plane playerPlane;
 
@@ -52,6 +53,12 @@ public class PlayerController : MonoBehaviour {
 //		} else {
 //			movement = new Vector3 (0, 0, 0);
 //		}
+
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			sprint = true;
+		} else if (Input.GetKeyUp (KeyCode.LeftShift)) {
+			sprint = false;
+		}
 			
 	
 	}
@@ -60,14 +67,18 @@ public class PlayerController : MonoBehaviour {
 		float h = Input.GetAxisRaw("Horizontal"); // Will only have the values -1, 0 or 1
 		float v = Input.GetAxisRaw("Vertical");
 
-		move (h, v);
+		move (h, v, sprint);
 		Turning ();
 	}
 
-	void move(float h, float v) {
+	void move(float h, float v, bool sprint) {
 		movement.Set(h, 0f, v);
 
-		movement = movement.normalized * speed * Time.deltaTime;
+		if (sprint) {
+			movement = movement.normalized * 2 * speed * Time.deltaTime;
+		} else {
+			movement = movement.normalized * speed * Time.deltaTime;
+		}
 
 		rgb.MovePosition(transform.position + movement);
 	}
@@ -85,8 +96,6 @@ public class PlayerController : MonoBehaviour {
 		{
 			// Create a vector from the player to the point on the floor the raycast from the mouse hit.
 			Vector3 playerToMouse = floorHit.point - transform.position;
-
-			Debug.Log (floorHit.point);
 
 			// Ensure the vector is entirely along the floor plane.
 			playerToMouse.y = 0f;
