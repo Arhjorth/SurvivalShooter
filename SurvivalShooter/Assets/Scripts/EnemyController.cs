@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-
 	Transform playerTransform;
 	NavMeshAgent nav;
 
@@ -14,7 +13,6 @@ public class EnemyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		nav.SetDestination (playerTransform.position);
-	}
+            nav.SetDestination(playerTransform.position);
+    }
 }
