@@ -59,9 +59,9 @@ public class PlayerController : MonoBehaviour {
 //			movement = new Vector3 (0, 0, 0);
 //		}
 
-		if (Input.GetKeyDown (KeyCode.LeftShift) && stamina >= 6) {
+		if (Input.GetButton("LeftShift") && stamina >= 6) {
 			sprint = true;
-		} else if (Input.GetKeyUp (KeyCode.LeftShift)) {
+		} else{
 			sprint = false;
 		}
 			
