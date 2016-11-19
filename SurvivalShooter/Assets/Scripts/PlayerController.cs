@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour {
 	Rigidbody rgb;
 	public int speed;
-//	public float rotationSpeed;
+    //	public float rotationSpeed;
+    public Slider staminaSlider;
 	Vector3 movement;
 	bool sprint = false;
 
@@ -19,11 +22,13 @@ public class PlayerController : MonoBehaviour {
 //	public GameObject fpc;
 
 	int floorMask;
+    private int stamina;
 
-	void Awake(){
+    void Awake(){
 		// Create a layer mask for the floor layer.
 		floorMask = LayerMask.GetMask ("Floor");
 		rgb = GetComponent<Rigidbody> ();
+        stamina = 100;
 
 	}
 
@@ -54,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 //			movement = new Vector3 (0, 0, 0);
 //		}
 
-		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+		if (Input.GetKeyDown (KeyCode.LeftShift) && stamina >= 6) {
 			sprint = true;
 		} else if (Input.GetKeyUp (KeyCode.LeftShift)) {
 			sprint = false;
@@ -76,9 +81,13 @@ public class PlayerController : MonoBehaviour {
 
 		if (sprint) {
 			movement = movement.normalized * 2 * speed * Time.deltaTime;
+            stamina -= 6;
+            staminaSlider.value = stamina;
 		} else {
 			movement = movement.normalized * speed * Time.deltaTime;
-		}
+            stamina += 3 ;
+            staminaSlider.value = stamina;
+        }
 
 		rgb.MovePosition(transform.position + movement);
 	}
