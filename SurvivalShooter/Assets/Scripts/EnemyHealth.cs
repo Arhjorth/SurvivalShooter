@@ -4,6 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
 	public int startingHealth = 100;            // The amount of health the enemy starts the game with.
 	private int currentHealth;                   // The current health the enemy has.
+    public int scoreValue = 1;
 	//public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
 	//public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
 	//public AudioClip deathClip;                 // The sound to play when the enemy dies.
@@ -79,6 +80,7 @@ public class EnemyHealth : MonoBehaviour
 		// Turn the collider into a trigger so shots can pass through it.
 		capsuleCollider.isTrigger = true;
 		Destroy (gameObject);
+        ScoreController.score += scoreValue;
 		// Tell the animator that the enemy is dead.
 		//anim.SetTrigger ("Dead");
 

@@ -7,12 +7,12 @@ public class PlayerHealth : MonoBehaviour
 {
 
     public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-    private int currentHealth;
+    public int currentHealth;
     public Slider healthSlider;
     public Image dmgImage;
     public float flashSpeed = 5f;
     public Color flashcolour = new Color(1f, 0f, 0f, 0.1f);
-    bool isDead;
+    public bool isDead;
     bool damaged;
 
     CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
