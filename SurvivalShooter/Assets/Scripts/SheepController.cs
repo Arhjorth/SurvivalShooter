@@ -1,0 +1,19 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class SheepController : MonoBehaviour {
+
+    Transform playerTransform;
+    NavMeshAgent nav;
+
+
+    void Awake() {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        nav = GetComponent<NavMeshAgent>();
+    }
+
+    // Update is called once per frame
+    void Update() {
+        nav.SetDestination(playerTransform.position);
+    }
+}
