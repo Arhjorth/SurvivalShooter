@@ -96,6 +96,6 @@ public class PlayerHealth : MonoBehaviour
         }
 
         GetComponent<Renderer>().enabled = false;
-
+        Application.LoadLevel("Dead");
     }
 }
