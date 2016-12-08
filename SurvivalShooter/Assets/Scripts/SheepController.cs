@@ -71,4 +71,7 @@ public class SheepController : MonoBehaviour {
          }
         return hitpos;
     }
+
+
+
 }
