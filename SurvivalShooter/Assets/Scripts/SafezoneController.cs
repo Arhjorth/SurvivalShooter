@@ -11,8 +11,7 @@ public class SafezoneController : MonoBehaviour {
     bool timer;
     float counter;
     int fenceSize;
-    int posWidth;
-    int posHeight;
+    
 
 
 	// Use this for initialization
@@ -91,9 +90,6 @@ public class SafezoneController : MonoBehaviour {
             centeredStyle.alignment = TextAnchor.UpperCenter;
             GUI.Label(new Rect(Screen.width - 110, Screen.height / 4 - 100, 100, 50), messageRight, centeredStyle);
         }
-
-
-
     }
 
     void OnTriggerEnter(Collider other) {
