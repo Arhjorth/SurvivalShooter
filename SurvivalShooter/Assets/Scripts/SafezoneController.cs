@@ -4,7 +4,8 @@ using System.Collections;
 public class SafezoneController : MonoBehaviour {
 
     public int pointsToUpgrade;
-    string message;
+    string messageMid;
+    string messageRight;
     bool displayTextMid;
     bool displayTextRight;
     bool timer;
@@ -42,7 +43,7 @@ public class SafezoneController : MonoBehaviour {
                 {
                     child.gameObject.SetActive(true);
                 }
-                message = "Fence upgraded";
+                messageMid = "Fence upgraded";
                 fenceSize = 1;
             }
 
@@ -50,21 +51,21 @@ public class SafezoneController : MonoBehaviour {
             {
                 transform.localScale = new Vector3(7f, transform.localScale.y, 7f);
                 fenceSize = 2;
-                message = "Fence upgraded";
+                messageMid = "Fence upgraded";
             }
             else if (fenceSize == 2 && ScoreController.score >= pointsToUpgrade * 4)
             {
                 transform.localScale = new Vector3(10f, transform.localScale.y, 10f);
                 fenceSize = 3;
-                message = "Fence upgraded";
+                messageMid = "Fence upgraded";
             }
             else if (fenceSize == 3)
             {
-                message = "Fence is fully upgraded";
+                messageMid = "Fence is fully upgraded";
             }
             else
             {
-                message = "Not Enough points to upgrade";
+                messageMid = "Not Enough points to upgrade";
             }
             displayTextMid = true;
         }
@@ -74,25 +75,21 @@ public class SafezoneController : MonoBehaviour {
 
     void OnGUI()
     {
+    
         if (displayTextMid)
-        {
-            posWidth = Screen.width / 2 - 50;
-            posHeight = Screen.height / 4 - 25;
-        }
-
-        if (displayTextRight)
-        {
-            posWidth = Screen.width - 110;
-            posHeight = Screen.height / 4 - 100;
-        }
-
-
-        if (displayTextMid || displayTextRight)
         {
             timer = true;
             var centeredStyle = GUI.skin.GetStyle("Label");
             centeredStyle.alignment = TextAnchor.UpperCenter;
-            GUI.Label(new Rect(posWidth, posHeight, 100, 50), message, centeredStyle);
+            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 4 - 25, 100, 50), messageMid, centeredStyle);
+        }
+
+        if (displayTextRight)
+        {
+            timer = true;
+            var centeredStyle = GUI.skin.GetStyle("Label");
+            centeredStyle.alignment = TextAnchor.UpperCenter;
+            GUI.Label(new Rect(Screen.width - 110, Screen.height / 4 - 100, 100, 50), messageRight, centeredStyle);
         }
 
 
@@ -105,7 +102,7 @@ public class SafezoneController : MonoBehaviour {
         }
         if (other.gameObject.tag == "Player")
         {
-            message = "Press 'U' to upgrade the fence";
+            messageRight = "Press 'U' to upgrade the fence";
             displayTextRight = true;
         }
     }
