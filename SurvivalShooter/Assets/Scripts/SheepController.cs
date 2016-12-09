@@ -9,6 +9,7 @@ public class SheepController : MonoBehaviour {
     private bool followPlayer;
     private bool sheepInSafeZone;
     public Plane safeZone;
+    AudioSource sheepSound; 
     //int safeZoneMesh;
     void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -16,6 +17,7 @@ public class SheepController : MonoBehaviour {
         playerInRange = false;
         followPlayer = false;
         sheepInSafeZone = false;
+        sheepSound = GetComponent<AudioSource>();
         //safeZoneMesh = NavMesh.GetNavMeshLayerFromName("Safezone");
 
     }
@@ -30,6 +32,7 @@ public class SheepController : MonoBehaviour {
                     followPlayer = false;
                 }
                 else if (!followPlayer) {
+                    sheepSound.Play();
                     followPlayer = true;
                 }
             }
