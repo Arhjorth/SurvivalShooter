@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        spawnPlaces = GameObject.FindGameObjectsWithTag("Spawnplace");
+        spawnPlaces = GameObject.FindGameObjectsWithTag("SpawnEnemy");
 	}
 	
 	// Update is called once per frame

@@ -14,6 +14,7 @@ public class ShootController : MonoBehaviour {
 	ParticleSystem gunParticles;                    // Reference to the particle system.
 	LineRenderer gunLine;                           // Reference to the line renderer.
 	float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
+    AudioSource gunSound;
 
 	void Awake ()
 	{
@@ -23,6 +24,7 @@ public class ShootController : MonoBehaviour {
 		// Set up the references.
 		gunParticles = GetComponent<ParticleSystem> ();
 		gunLine = GetComponent <LineRenderer> ();
+        gunSound = GetComponent<AudioSource>();
 	}
 
 	void Update ()
@@ -56,6 +58,9 @@ public class ShootController : MonoBehaviour {
 		// Reset the timer.
 		timer = 0f;
 
+        // play sound
+        gunSound.Stop();
+        gunSound.Play();
 
 		// Stop the particles from playing if they were, then start the particles.
 		gunParticles.Stop ();

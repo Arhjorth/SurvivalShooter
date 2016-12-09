@@ -3,69 +3,42 @@ using System.Collections;
 
 public class SheepController : MonoBehaviour {
 
-    LevelController levelcontroller;
     Transform playerTransform;
     NavMeshAgent nav;
     private bool playerInRange;
     private bool followPlayer;
     private bool sheepInSafeZone;
     public Plane safeZone;
-
-    string messageMid;
-    string messageRight;
-    bool displayTextMid;
-    bool displayTextRight;
-    bool timer;
-    float counter;
-
-
+    AudioSource sheepSound; 
     //int safeZoneMesh;
     void Awake() {
-        levelcontroller = GetComponentInParent<LevelController>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         nav = GetComponent<NavMeshAgent>();
         playerInRange = false;
         followPlayer = false;
         sheepInSafeZone = false;
+        sheepSound = GetComponent<AudioSource>();
         //safeZoneMesh = NavMesh.GetNavMeshLayerFromName("Safezone");
 
     }
 
     // Update is called once per frame
     void Update() {
-
-        if (timer)
-        {
-            counter += Time.deltaTime;
-        }
-        if (counter > 3)
-        {
-            displayTextMid = false;
-            displayTextRight = false;
-            timer = false;
-            counter = 0;
-        }
-
-
         if (!sheepInSafeZone) { // When sheep is in safe zone, interaction should no longer be possible.
 
 
             if (Input.GetKeyDown(KeyCode.F) && playerInRange) {
                 if (followPlayer) {
                     followPlayer = false;
-                   
                 }
                 else if (!followPlayer) {
+                    sheepSound.Play();
                     followPlayer = true;
-                    messageMid = "The sheep is now following you";
-                    displayTextMid = true;
                 }
             }
 
             if (followPlayer && playerInRange) {
                 nav.SetDestination(playerTransform.position);
-                messageMid = "The sheep is now following you";
-                displayTextMid = true;
             }
         }
        // else { // Try to get randompoint to work
@@ -77,19 +50,12 @@ public class SheepController : MonoBehaviour {
     void OnTriggerExit(Collider other) {
         if(other.gameObject.tag == "Player") {
             playerInRange = false;
-            
         }
     }
 
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Player") {
             playerInRange = true;
-            messageRight = "press 'f' to make the sheep follow you";
-            displayTextRight = true;
-        }
-        if (other.gameObject.tag == "SafeZone")
-        {
-            levelcontroller.addSheep();
         }
     }
 
@@ -108,25 +74,7 @@ public class SheepController : MonoBehaviour {
          }
         return hitpos;
     }
-    void OnGUI()
-    {
 
-        if (displayTextMid)
-        {
-            timer = true;
-            var centeredStyle = GUI.skin.GetStyle("Label");
-            centeredStyle.alignment = TextAnchor.UpperCenter;
-            GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 4 - 25, 100, 50), messageMid, centeredStyle);
-        }
-
-        if (displayTextRight)
-        {
-            timer = true;
-            var centeredStyle = GUI.skin.GetStyle("Label");
-            centeredStyle.alignment = TextAnchor.UpperCenter;
-            GUI.Label(new Rect(Screen.width - 110, Screen.height / 4 - 100, 100, 50), messageRight, centeredStyle);
-        }
-    }
 
 
 }
