@@ -11,7 +11,8 @@ public class SafezoneController : MonoBehaviour {
     bool timer;
     float counter;
     int fenceSize;
-    
+    public int sheeps;
+    public int reqSheepsToWin;
 
 
 	// Use this for initialization
@@ -69,6 +70,11 @@ public class SafezoneController : MonoBehaviour {
             displayTextMid = true;
         }
 
+        if (sheeps == reqSheepsToWin)
+        {
+            Application.LoadLevel("Lvl02");
+        }
+
     }
 	
 
@@ -95,6 +101,7 @@ public class SafezoneController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Sheep") { // Will only collide with the body collider of the sheep. Tag sheep should be applied on the body.
             other.gameObject.GetComponentInParent<SheepController>().setSheepInSafeZone();
+            sheeps += 1;
         }
         if (other.gameObject.tag == "Player")
         {

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SheepController : MonoBehaviour {
 
+    LevelController levelcontroller;
     Transform playerTransform;
     NavMeshAgent nav;
     private bool playerInRange;
@@ -20,6 +21,7 @@ public class SheepController : MonoBehaviour {
 
     //int safeZoneMesh;
     void Awake() {
+        levelcontroller = GetComponentInParent<LevelController>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         nav = GetComponent<NavMeshAgent>();
         playerInRange = false;
@@ -84,6 +86,10 @@ public class SheepController : MonoBehaviour {
             playerInRange = true;
             messageRight = "press 'f' to make the sheep follow you";
             displayTextRight = true;
+        }
+        if (other.gameObject.tag == "SafeZone")
+        {
+            levelcontroller.addSheep();
         }
     }
 
