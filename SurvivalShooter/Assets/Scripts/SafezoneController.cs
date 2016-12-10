@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SafezoneController : MonoBehaviour {
 
@@ -12,16 +13,21 @@ public class SafezoneController : MonoBehaviour {
     float counter;
     int fenceSize;
     public int sheeps;
-    public int reqSheepsToWin;
+    int reqSheepsToWinLvl01;
+    int reqSheepsToWinLvl02;
 
+    public int test;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        reqSheepsToWinLvl01 = 1;
+        reqSheepsToWinLvl02 = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        
         if (timer)
         {
             counter += Time.deltaTime;
@@ -37,42 +43,69 @@ public class SafezoneController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            if (fenceSize == 0 && ScoreController.score >= pointsToUpgrade)
-            {
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(true);
-                }
-                messageMid = "Fence upgraded";
-                fenceSize = 1;
-            }
+            //if (fenceSize == 0)
+            //{
+            //    foreach (Transform child in transform)
+            //    {
+            //        child.gameObject.SetActive(true);
+            //    }
+            //    messageMid = "Fence upgraded";
+            //    fenceSize = 1;
+            //}
 
-            else if (fenceSize == 1 && ScoreController.score >= pointsToUpgrade * 2)
+            if (SceneManager.GetActiveScene().buildIndex != 1)
             {
-                transform.localScale = new Vector3(7f, transform.localScale.y, 7f);
-                fenceSize = 2;
-                messageMid = "Fence upgraded";
+
+                if (fenceSize == 0 && ScoreController.score >= pointsToUpgrade)
+                {
+                    transform.localScale = new Vector3(7f, transform.localScale.y, 7f);
+                    fenceSize = 1;
+                    messageMid = "Fence upgraded";
+                }
+                else if (fenceSize == 1 && ScoreController.score >= pointsToUpgrade * 2)
+                {
+                    transform.localScale = new Vector3(10f, transform.localScale.y, 10f);
+                    fenceSize = 2;
+                    messageMid = "Fence upgraded";
+                }
+                else if (fenceSize == 2)
+                {
+                    messageMid = "Fence is fully upgraded";
+                }
+                else
+                {
+                    messageMid = "Not Enough points to upgrade";
+                }
+                displayTextMid = true;
             }
-            else if (fenceSize == 2 && ScoreController.score >= pointsToUpgrade * 4)
-            {
-                transform.localScale = new Vector3(10f, transform.localScale.y, 10f);
-                fenceSize = 3;
-                messageMid = "Fence upgraded";
-            }
-            else if (fenceSize == 3)
-            {
-                messageMid = "Fence is fully upgraded";
-            }
-            else
-            {
-                messageMid = "Not Enough points to upgrade";
-            }
-            displayTextMid = true;
         }
 
-        if (sheeps == reqSheepsToWin)
+        //if (SceneManager.GetActiveScene().buildIndex == 0){
+        //    test = 1;
+        //}
+        //else if (SceneManager.GetActiveScene().buildIndex == 1)
+        //{
+        //    test = 2;
+        //}
+        //else if (SceneManager.GetActiveScene().buildIndex == 2)
+        //{
+        //    test = 3;
+        //}
+        //else if (SceneManager.GetActiveScene().buildIndex == 3)
+        //{
+        //    test = 4;
+        //}
+
+
+        if (SceneManager.GetActiveScene().buildIndex == 1 && reqSheepsToWinLvl01 == sheeps)
         {
-            Application.LoadLevel("Lvl02");
+            SceneManager.LoadScene("lvl02");
+            sheeps = 0;
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 2 && reqSheepsToWinLvl02 == sheeps)
+        {
+            SceneManager.LoadScene("lvl03");
+            sheeps = 0;
         }
 
     }
@@ -103,7 +136,7 @@ public class SafezoneController : MonoBehaviour {
             other.gameObject.GetComponentInParent<SheepController>().setSheepInSafeZone();
             sheeps += 1;
         }
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && SceneManager.GetActiveScene().buildIndex != 1)
         {
             messageRight = "Press 'U' to upgrade the fence";
             displayTextRight = true;
