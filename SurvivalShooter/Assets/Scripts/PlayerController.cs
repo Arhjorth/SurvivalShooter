@@ -85,8 +85,8 @@ public class PlayerController : MonoBehaviour {
             staminaSlider.value = stamina;
 		} else {
 			movement = movement.normalized * speed * Time.deltaTime;
-            stamina += 3 ;
             staminaSlider.value = stamina;
+            if (!Input.GetButton("LeftShift")) { stamina += 3; }
         }
 
 		rgb.MovePosition(transform.position + movement);
