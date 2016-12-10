@@ -6,7 +6,7 @@ public class MenuLoadGame : MonoBehaviour {
 
     public void StartGame()
     {
-        SceneManager.LoadScene("lvl00");
+        SceneManager.LoadScene("lvl01");
     }
 
 
