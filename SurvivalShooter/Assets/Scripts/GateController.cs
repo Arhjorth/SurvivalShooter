@@ -10,13 +10,16 @@ public class GateController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+
+        setSize();
+      
+    }
+    
+    public void setSize() {
         gateTransform = gameObject.transform;
         openPosition = gateTransform.position - new Vector3(0, gateTransform.localScale.y, 0);
         closedPosition = gateTransform.position;
-
-      
     }
-
     // Update is called once per frame
     void Update () {
 	

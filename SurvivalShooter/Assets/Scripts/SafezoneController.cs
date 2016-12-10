@@ -15,6 +15,7 @@ public class SafezoneController : MonoBehaviour {
     public int sheeps;
     int reqSheepsToWinLvl01;
     int reqSheepsToWinLvl02;
+    GateController[] gates;
 
     public int test;
 
@@ -22,6 +23,7 @@ public class SafezoneController : MonoBehaviour {
 	void Awake () {
         reqSheepsToWinLvl01 = 1;
         reqSheepsToWinLvl02 = 1;
+        gates = GetComponentsInChildren<GateController>();
 	}
 	
 	// Update is called once per frame
@@ -59,12 +61,14 @@ public class SafezoneController : MonoBehaviour {
                 if (fenceSize == 0 && ScoreController.score >= pointsToUpgrade)
                 {
                     transform.localScale = new Vector3(7f, transform.localScale.y, 7f);
+                    resizeGateController();
                     fenceSize = 1;
                     messageMid = "Fence upgraded";
                 }
                 else if (fenceSize == 1 && ScoreController.score >= pointsToUpgrade * 2)
                 {
                     transform.localScale = new Vector3(10f, transform.localScale.y, 10f);
+                    resizeGateController();
                     fenceSize = 2;
                     messageMid = "Fence upgraded";
                 }
@@ -110,6 +114,11 @@ public class SafezoneController : MonoBehaviour {
 
     }
 	
+    void resizeGateController() {
+        foreach(GateController gateC in gates) {
+            gateC.setSize();
+        }
+    }
 
     void OnGUI()
     {
