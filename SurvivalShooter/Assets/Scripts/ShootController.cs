@@ -5,8 +5,9 @@ public class ShootController : MonoBehaviour {
 
 	public int damagePerShot = 100;                  // The damage inflicted by each bullet.
 	public float timeBetweenBullets = 0.15f;        // The time between each shot.
-	public float range = 100f;                      // The distance the gun can fire.
-
+    public int forceByShot;
+    public float range = 100f;                      // The distance the gun can fire.
+    
 	float timer;                                    // A timer to determine when to fire.
 	Ray shootRay;                                   // A ray from the gun end forwards.
 	RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
@@ -74,6 +75,7 @@ public class ShootController : MonoBehaviour {
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
 
+
 		// Perform the raycast against gameobjects on the shootable layer and if it hits something...
 				if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
 				{
@@ -82,10 +84,10 @@ public class ShootController : MonoBehaviour {
 					
 		
 					// If the EnemyHealth component exist...
-					if(enemyHealth != null)
-					{
-						// ... the enemy should take damage.
-						enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+					if(enemyHealth != null) {
+                // ... the enemy should take damage.
+                        shootHit.collider.transform.Translate(shootRay.direction*forceByShot,Space.World);
+                        enemyHealth.TakeDamage (damagePerShot, shootHit.point);
 					}
 		
 					// Set the second position of the line renderer to the point the raycast hit.

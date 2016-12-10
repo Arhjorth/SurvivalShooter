@@ -16,10 +16,8 @@ public class PickupSpawner : MonoBehaviour {
 
 
         d += Time.deltaTime;
-        Debug.Log(d);
 
         if ((int)d == 10) {
-            Debug.Log("FUCK YEAH");
             foreach(GameObject pickup in GameObject.FindGameObjectsWithTag("Pickup")) {
                 Destroy(pickup);
             }
