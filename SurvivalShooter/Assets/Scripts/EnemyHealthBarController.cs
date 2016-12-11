@@ -15,7 +15,6 @@ public class EnemyHealthBarController : MonoBehaviour {
 	}
 
     internal void updateHealthBar(float newScale) {
-        Debug.Log(newScale);
         this.transform.localScale = new Vector3(newScale, this.transform.localScale.y, this.transform.localScale.z);
     }
 }

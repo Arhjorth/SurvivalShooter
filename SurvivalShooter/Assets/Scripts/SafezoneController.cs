@@ -12,7 +12,7 @@ public class SafezoneController : MonoBehaviour {
     bool timer;
     float counter;
     int fenceSize;
-    public int sheeps;
+    int sheeps;
     int reqSheepsToWinLvl01;
     int reqSheepsToWinLvl02;
     GateController[] gates;
@@ -114,6 +114,10 @@ public class SafezoneController : MonoBehaviour {
             sheeps = 0;
         }
 
+    }
+
+    public int getNumberOfSheeps() {
+        return sheeps;
     }
 	
     void resizeGateController() {

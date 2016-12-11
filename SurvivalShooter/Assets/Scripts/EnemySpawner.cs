@@ -4,24 +4,37 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
 	public GameObject Enemy;
-	private Vector3 offset = new Vector3 (15, 0, 0);
     GameObject[] spawnPlaces;
+    SafezoneController safeZoneInfo;
+    public int numberOfEnemies = 5;
+    int startingEnemies;
 
 	// Use this for initialization
 	void Start () {
         spawnPlaces = GameObject.FindGameObjectsWithTag("SpawnEnemy");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        safeZoneInfo = GameObject.FindGameObjectWithTag("Safezone").GetComponent<SafezoneController>();
+        startingEnemies = numberOfEnemies;
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
         
-
-
-		if (enemies.Length < 5) {
+        if(safeZoneInfo.getNumberOfSheeps() > 0) {
+            numberOfEnemies = startingEnemies + safeZoneInfo.getNumberOfSheeps(); 
+        }
+		if (enemies.Length < numberOfEnemies) {
             GameObject rndSpawn = spawnPlaces[Random.Range(0, spawnPlaces.Length-1)];
-			Instantiate (Enemy, rndSpawn.transform.position, Quaternion.identity);
-		}
+			GameObject instance = (GameObject) Instantiate (Enemy, rndSpawn.transform.position, Quaternion.identity);
+            if (safeZoneInfo.getNumberOfSheeps() > 0) {
+                if (Random.value < safeZoneInfo.getNumberOfSheeps()) {
+                    EnemyController ec = instance.GetComponent<EnemyController>();
+                    ec.setNavMeshAgentSpeed(ec.getNavMeshAgent().speed + 5); //Hardcoded value
+
+                }
+            }
+        }
 	}
 }

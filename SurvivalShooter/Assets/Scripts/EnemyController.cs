@@ -15,4 +15,13 @@ public class EnemyController : MonoBehaviour {
 	void Update () {
             nav.SetDestination(playerTransform.position);
     }
+
+    public NavMeshAgent getNavMeshAgent() {
+        return nav;
+    }
+
+    public void setNavMeshAgentSpeed(float newSpeed) {
+        nav.speed = newSpeed;
+
+    }
 }
