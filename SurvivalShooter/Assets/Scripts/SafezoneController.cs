@@ -16,6 +16,7 @@ public class SafezoneController : MonoBehaviour {
     int reqSheepsToWinLvl01;
     int reqSheepsToWinLvl02;
     GateController[] gates;
+    AudioSource sheepInPasture;
 
     public int test;
 
@@ -24,6 +25,7 @@ public class SafezoneController : MonoBehaviour {
         reqSheepsToWinLvl01 = 1;
         reqSheepsToWinLvl02 = 1;
         gates = GetComponentsInChildren<GateController>();
+        sheepInPasture = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -144,6 +146,7 @@ public class SafezoneController : MonoBehaviour {
         if(other.gameObject.tag == "Sheep") { // Will only collide with the body collider of the sheep. Tag sheep should be applied on the body.
             other.gameObject.GetComponentInParent<SheepController>().setSheepInSafeZone();
             sheeps += 1;
+            sheepInPasture.Play();
         }
         if (other.gameObject.tag == "Player" && SceneManager.GetActiveScene().buildIndex != 1)
         {
