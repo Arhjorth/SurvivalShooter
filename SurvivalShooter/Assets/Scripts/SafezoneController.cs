@@ -18,7 +18,6 @@ public class SafezoneController : MonoBehaviour {
     GateController[] gates;
     AudioSource sheepInPasture;
 
-    public int test;
 
 	// Use this for initialization
 	void Awake () {
@@ -74,9 +73,23 @@ public class SafezoneController : MonoBehaviour {
                     fenceSize = 2;
                     messageMid = "Fence upgraded";
                 }
-                else if (fenceSize == 2)
+                else if (fenceSize == 2 && SceneManager.GetActiveScene().buildIndex != 3)
                 {
                     messageMid = "Fence is fully upgraded";
+                }
+                else if (fenceSize == 2 && ScoreController.score >= pointsToUpgrade * 8)
+                {
+                    transform.localScale = new Vector3(12f, transform.localScale.y, 12f);
+                    resizeGateController();
+                    fenceSize = 3;
+                    messageMid = "Fence upgraded";
+                }
+                else if (fenceSize == 3 && ScoreController.score >= pointsToUpgrade * 20)
+                {
+                    transform.localScale = new Vector3(15f, transform.localScale.y, 15f);
+                    resizeGateController();
+                    fenceSize = 4;
+                    messageMid = "Fence upgraded";
                 }
                 else
                 {
@@ -113,6 +126,12 @@ public class SafezoneController : MonoBehaviour {
             SceneManager.LoadScene("lvl03");
             sheeps = 0;
         }
+
+
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    SceneManager.LoadScene("Menu");
+        //}
 
     }
 	
