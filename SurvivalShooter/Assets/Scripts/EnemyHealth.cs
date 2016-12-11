@@ -16,7 +16,8 @@ public class EnemyHealth : MonoBehaviour
 	CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
 	bool isDead;                                // Whether the enemy is dead.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
-
+    EnemyHealthBarController healthBar;
+    
 
 	void Awake ()
 	{
@@ -28,6 +29,9 @@ public class EnemyHealth : MonoBehaviour
 
 		// Setting the current health when the enemy first spawns.
 		currentHealth = startingHealth;
+        healthBar = GetComponentInChildren<EnemyHealthBarController>();
+
+        
 	}
 
 	void Update ()
@@ -53,6 +57,7 @@ public class EnemyHealth : MonoBehaviour
 
 		// Reduce the current health by the amount of damage sustained.
 		currentHealth -= amount;
+        healthBar.updateHealthBar((float) currentHealth / (float)startingHealth);
 
 		// Set the position of the particle system to where the hit was sustained.
 	//	Debug.Log(hitParticles.transform.position);
@@ -69,7 +74,6 @@ public class EnemyHealth : MonoBehaviour
 			Death ();
 		}
 	}
-
 
 	void Death ()
 	{
