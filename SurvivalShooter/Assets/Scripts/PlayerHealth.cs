@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     public Color flashcolour = new Color(1f, 0f, 0f, 0.1f);
     public bool isDead;
     bool damaged;
+    AudioSource deathSound;
 
     CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
     PlayerController playerController;
@@ -26,6 +27,9 @@ public class PlayerHealth : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
         playerController = GetComponent<PlayerController>();
         shootController = GetComponentInChildren<ShootController>();
+        AudioSource[] sounds =  GetComponents<AudioSource>();
+        deathSound = sounds[1];
+
     }
 
     // Update is called once per frame
@@ -83,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
     private void Death()
     {
         isDead = true;
-
+        deathSound.Play();
         // Turn the collider into a trigger so shots can pass through it.
         capsuleCollider.isTrigger = true;
 
@@ -97,5 +101,6 @@ public class PlayerHealth : MonoBehaviour
 
         GetComponent<Renderer>().enabled = false;
         Application.LoadLevel("Dead");
+        DontDestroyOnLoad(deathSound);
     }
 }

@@ -9,12 +9,15 @@ public class EnemyDamage : MonoBehaviour {
     public float timeBetweenAttacks = 0.15f;
     private bool fighting = false;
     float timer;
+    AudioSource attackSound;
      
     
 	void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
 
         playerHealth = player.GetComponent<PlayerHealth>();
+        attackSound = GetComponent<AudioSource>();
+
     }
 
 	// Update is called once per frame
@@ -23,6 +26,7 @@ public class EnemyDamage : MonoBehaviour {
         timer += Time.deltaTime;
 
         if (fighting && timer >= timeBetweenAttacks) {
+            attackSound.Play();
             playerHealth.takeDamage(damage);
             timer = 0f;
         }
