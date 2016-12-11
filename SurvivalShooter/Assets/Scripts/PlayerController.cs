@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     public Slider staminaSlider;
 	Vector3 movement;
 	bool sprint = false;
+    AudioSource playerSound;
 
 //	Plane playerPlane;
 
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 		floorMask = LayerMask.GetMask ("Floor");
 		rgb = GetComponent<Rigidbody> ();
         stamina = 100;
+        playerSound = GetComponent<AudioSource>();
 
 	}
 
@@ -83,11 +85,33 @@ public class PlayerController : MonoBehaviour {
 			movement = movement.normalized * 2 * speed * Time.deltaTime;
             stamina -= 6;
             staminaSlider.value = stamina;
-		} else {
+            if (!playerSound.isPlaying) {
+                playerSound.pitch = 1f;
+                playerSound.Play();
+            }else if(playerSound.isPlaying && playerSound.pitch == 0.5f) {
+                playerSound.Stop();
+                playerSound.pitch = 1;
+                playerSound.Play();
+            }
+		} else if(!sprint) {
 			movement = movement.normalized * speed * Time.deltaTime;
             staminaSlider.value = stamina;
+
+            if (playerSound.isPlaying && playerSound.pitch == 1f) {
+                playerSound.Stop();
+                playerSound.pitch = 0.5f;
+                playerSound.Play();
+            } else if (!playerSound.isPlaying && (h != 0f || v != 0f)) {
+                playerSound.pitch = 0.5f;
+                playerSound.Play();
+            }else if(playerSound.isPlaying && (h == 0f && v == 0f)) {
+                playerSound.Stop();
+            }
+            
+            
             if (!Input.GetButton("LeftShift")) { stamina += 3; }
         }
+        else { playerSound.Stop(); }
 
 		rgb.MovePosition(transform.position + movement);
 	}
