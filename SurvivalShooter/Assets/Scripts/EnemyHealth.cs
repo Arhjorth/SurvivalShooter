@@ -110,4 +110,5 @@ public class EnemyHealth : MonoBehaviour
 		// After 2 seconds destory the enemy.
 		//Destroy (gameObject, 2f);
 	//}
+    
 }

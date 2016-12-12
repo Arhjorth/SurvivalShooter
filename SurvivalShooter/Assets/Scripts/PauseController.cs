@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PauseController : MonoBehaviour {
+public class PauseController : MonoBehaviour
+{
 
     GameObject PauseMenu;
     bool paused;
@@ -51,7 +52,7 @@ public class PauseController : MonoBehaviour {
 
     }
 
-    
+
     public void Quit()
     {
 

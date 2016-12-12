@@ -100,7 +100,16 @@ public class PlayerHealth : MonoBehaviour
         }
 
         GetComponent<Renderer>().enabled = false;
-        Application.LoadLevel("Dead");
-        DontDestroyOnLoad(deathSound);
+        //DontDestroyOnLoad(deathSound);
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
+    }
+
+    public void setIsdead(bool dead)
+    {
+        isDead = dead;
     }
 }
