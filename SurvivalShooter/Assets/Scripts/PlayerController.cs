@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 //	private float mouseX;
 //	private float mouseY;
 //	private float cameraDif;
-	float camRayLength = 200f;
+	float camRayLength = 400f;
 
 //	public GameObject fpc;
 
