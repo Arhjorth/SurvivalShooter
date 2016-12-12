@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-	Transform playerTransform;
+    GameObject player;
+    Transform playerTransform;
 	NavMeshAgent nav;
 
 

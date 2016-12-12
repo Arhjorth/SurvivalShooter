@@ -25,7 +25,7 @@ public class EnemyDamage : MonoBehaviour {
 
         timer += Time.deltaTime;
 
-        if (fighting && timer >= timeBetweenAttacks) {
+        if (fighting && timer >= timeBetweenAttacks && !playerHealth.GetIsDead()) {
             attackSound.Play();
             playerHealth.takeDamage(damage);
             timer = 0f;

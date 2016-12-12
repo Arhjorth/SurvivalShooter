@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         if (damaged)
         {
             dmgImage.color = flashcolour;
@@ -90,7 +90,6 @@ public class PlayerHealth : MonoBehaviour
         deathSound.Play();
         // Turn the collider into a trigger so shots can pass through it.
         capsuleCollider.isTrigger = true;
-
         playerController.enabled = false;
         shootController.enabled = false;
 
@@ -100,6 +99,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         GetComponent<Renderer>().enabled = false;
+
         //DontDestroyOnLoad(deathSound);
     }
 
