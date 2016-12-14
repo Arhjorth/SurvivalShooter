@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour {
             GameObject rndSpawn = spawnPlaces[Random.Range(0, spawnPlaces.Length-1)];
 			GameObject instance = (GameObject) Instantiate (Enemy, rndSpawn.transform.position, Quaternion.identity);
             if (safeZoneInfo.getNumberOfSheeps() > 0) {
-                if (Random.value < safeZoneInfo.getNumberOfSheeps()) {
+                if (Random.value < safeZoneInfo.getNumberOfSheeps()/10) {
                     EnemyController ec = instance.GetComponent<EnemyController>();
                     ec.setNavMeshAgentSpeed(ec.getNavMeshAgent().speed + 5); //Hardcoded value
 
