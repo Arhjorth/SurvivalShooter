@@ -168,6 +168,7 @@ public class SafezoneController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Sheep") { // Will only collide with the body collider of the sheep. Tag sheep should be applied on the body.
             other.gameObject.GetComponentInParent<SheepController>().setSheepInSafeZone();
+            ScoreController.score += 10;
             sheeps += 1;
             sheepInPasture.Play();
         }
