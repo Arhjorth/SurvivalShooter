@@ -3,18 +3,18 @@ using System.Collections;
 
 public class ShootController : MonoBehaviour {
 
-	public int damagePerShot = 100;                  // The damage inflicted by each bullet.
-	public float timeBetweenBullets = 0.15f;        // The time between each shot.
+	public int damagePerShot = 100;                 
+	public float timeBetweenBullets = 0.15f;        
     public int forceByShot;
-    public float range = 100f;                      // The distance the gun can fire.
+    public float range = 100f;                      
     
-	float timer;                                    // A timer to determine when to fire.
-	Ray shootRay;                                   // A ray from the gun end forwards.
-	RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
-	int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
-	ParticleSystem gunParticles;                    // Reference to the particle system.
-	LineRenderer gunLine;                           // Reference to the line renderer.
-	float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
+	float timer;                                    
+	Ray shootRay;                                   
+	RaycastHit shootHit;                            
+	int shootableMask;                              
+	ParticleSystem gunParticles;                    
+	LineRenderer gunLine;                           
+	float effectsDisplayTime = 0.2f;                
     AudioSource gunSound;
 
 	void Awake ()

@@ -27,7 +27,6 @@ public class GateController : MonoBehaviour {
 
     void OnTriggerExit(Collider other) {
         objectsInCollision -= 1;
-        Debug.Log("EXIT: " + objectsInCollision);
         if(objectsInCollision == 0) {
 
             gateTransform.position = closedPosition;
@@ -37,7 +36,6 @@ public class GateController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         objectsInCollision += 1;
-        Debug.Log("Enter: " + objectsInCollision);
         if (other.gameObject.tag != "Enemy") {
 
             gateTransform.position = openPosition;
